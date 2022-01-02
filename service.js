@@ -34,6 +34,9 @@ const ranks = [
     }
 ]
 
+var actions = []
+var process
+
 function getColorByRank(rank)
 {
     const info = ranks.find(elem => rank >= elem.interval[0] && rank <= elem.interval[1])
@@ -51,8 +54,19 @@ async function processChange(elem, number) {
 var observe = new MutationObserver(function(mutations, observer) {
     for (var mutate in mutations) {
         for (var elem of mutations[mutate].addedNodes) {
-            processChange(elem, elem.querySelector(".card-title").textContent.match(/\d+/g))
+            actions.push({"target": elem, "mint": elem.querySelector(".card-title").textContent.match(/\d+/g)})
         }
+        if (!process)
+            process = setInterval(() => {
+                if (!actions.length) {
+                    clearInterval(process)
+                    process = null
+                    return;
+                }
+                const item = actions.pop()
+                processChange(item.target, item.mint)
+                console.log("proceed")
+            }, 20)
     }
 })
 
@@ -69,7 +83,7 @@ var loaded = new MutationObserver(function(mutations, observer) {
 
 async function isServeRun() {
     var run = true;
-    await fetch(api + 1, { method:'GET'}).catch(a => run = false)
+    await fetch(api, { method:'GET'}).catch(a => run = false)
     return run
 }
 

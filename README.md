@@ -10,7 +10,7 @@ Allow you to see rank of mystery loops nft directly on solanart.io
 
 - Activate Developer Mode
 
-- Load the folder intraxphub_chrome with "Load unpacked".
+- Load the folder solanart-rank-viewer with "Load unpacked".
 
 ### Step 2 : Launch proxy
 ```console
