@@ -1,0 +1,10 @@
+{
+    "name": "solanart-rank-ext",
+    "description": "See rank on solanart",
+    "version": "1.0",
+    "manifest_version": 3,
+    "content_scripts": [{
+        "js": ["service.js"],
+        "matches": ["https://solanart.io/collections/mysteryloopsclub"]
+      }]
+  }
