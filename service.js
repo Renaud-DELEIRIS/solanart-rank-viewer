@@ -36,33 +36,34 @@ const ranks = [
 
 function getColorByRank(rank)
 {
-    const info = ranks.find(elem => rank > elem.interval[0] && rank < elem.interval[1])
+    const info = ranks.find(elem => rank >= elem.interval[0] && rank <= elem.interval[1])
     return info.color
 }
 
 async function processChange(elem, number) {
-    var info;
-    await fetch(api + number, {
+    const info = await fetch(api + number, {
         method: "GET"
-    }).then(data => data.json()).then(data => info = data)
+    }).then(data => data.json()).then(data => data)
     const color = getColorByRank(info.rank)
     elem.style["background-color"] = color;
 }
 
 var observe = new MutationObserver(function(mutations, observer) {
     for (var mutate in mutations) {
-        mutations[mutate].addedNodes.forEach(elem => {
+        for (var elem of mutations[mutate].addedNodes) {
             processChange(elem, elem.querySelector(".card-title").textContent.match(/\d+/g))
-        })
+        }
     }
 })
 
 var loaded = new MutationObserver(function(mutations, observer) {
-    const container = document.getElementsByClassName(ContainerClass).item(0)
+    const container = document.querySelector(".containerCollection1")
     if (container) {
         observe.observe(container, {
             childList: true,
         })
+    } else {
+        observe.takeRecords()
     }
 });
 
