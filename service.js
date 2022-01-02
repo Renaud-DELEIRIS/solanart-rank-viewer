@@ -1,4 +1,4 @@
-const api = 'http://localhost:3050/data/'
+const api = 'http://193.70.2.77:3050/data/'
 const ContainerClass = "containerCollection1"
 
 const ranks = [
