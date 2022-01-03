@@ -7,9 +7,6 @@ const path = require('path')
 const app = express()
 const port = 3050
 
-var cached = fs.readFileSync(".cache/data.json")
-cached = JSON.parse(cached)
-
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
@@ -17,6 +14,7 @@ app.get('/', (req, res) => {
 app.use(cors())
 
 app.get('/data/:loop', async (req, res) => {
+  var cached = JSON.parse(fs.readFileSync(".cache/data.json"))
   if (cached[req.params.loop]) {
     res.send(cached[req.params.loop])
     console.log("cached")
